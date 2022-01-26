@@ -1,1 +1,1 @@
-COMPONENT_DEPENDS = esp-homekit
+COMPONENT_DEPENDS = homekit

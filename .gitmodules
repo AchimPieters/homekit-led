@@ -1,0 +1,30 @@
+[submodule "button"]
+	path = components/common/button
+	url = https://github.com/maximkulkin/esp-button.git
+[submodule "homekit"]
+	path = components/common/homekit
+	url = https://github.com/maximkulkin/esp-homekit.git
+[submodule "wolfssl"]
+	path = components/common/wolfssl
+	url = https://github.com/maximkulkin/esp-wolfssl.git
+[submodule "idf/http-parser"]
+	path = components/esp-idf/http-parser
+	url = https://github.com/maximkulkin/esp-http-parser.git
+[submodule "WS2812FX"]
+	path = components/esp8266-open-rtos/WS2812FX
+	url = https://github.com/pcsaito/WS2812FX-rtos.git
+[submodule "cJSON"]
+	path = components/esp8266-open-rtos/cJSON
+	url = https://github.com/maximkulkin/esp-cjson.git
+[submodule "led-status"]
+	path = components/esp8266-open-rtos/led-status
+	url = https://github.com/maximkulkin/esp-led-status.git
+[submodule "qrcode"]
+	path = components/esp8266-open-rtos/qrcode
+	url = https://github.com/maximkulkin/esp-qrcode.git
+[submodule "wifi_config"]
+	path = components/esp8266-open-rtos/wifi_config
+	url = https://github.com/maximkulkin/esp-wifi-config.git
+[submodule "http-parser"]
+	path = components/esp8266-rtos-sdk/http-parser
+	url = https://github.com/maximkulkin/esp-http-parser.git
