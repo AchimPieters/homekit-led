@@ -1,4 +1,4 @@
-/** Copyright 2022Achim Pieters | StudioPieters®
+/** Copyright 2022 Achim Pieters | StudioPieters®
 
    Permission is hereby granted, free of charge, to any person obtaining a copy
    of this software and associated documentation files (the "Software"), to deal
@@ -132,7 +132,6 @@ void led_on_set(homekit_value_t value) {
 #define DEVICE_MODEL "SD466NL/A"
 #define FW_VERSION "0.0.1"
 
-homekit_characteristic_t ota_trigger  = API_OTA_TRIGGER;
 homekit_characteristic_t name = HOMEKIT_CHARACTERISTIC_(NAME, DEVICE_NAME);
 homekit_characteristic_t manufacturer = HOMEKIT_CHARACTERISTIC_(MANUFACTURER,  DEVICE_MANUFACTURER);
 homekit_characteristic_t serial = HOMEKIT_CHARACTERISTIC_(SERIAL_NUMBER, DEVICE_SERIAL);
