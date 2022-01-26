@@ -681,15 +681,6 @@ CONFIG_HEAP_TRACING_OFF=y
 # end of Heap memory debugging
 
 #
-# HomeKit
-#
-CONFIG_HOMEKIT_SPI_FLASH_BASE_ADDR=0x200000
-CONFIG_HOMEKIT_MAX_CLIENTS=16
-# CONFIG_HOMEKIT_SMALL is not set
-# CONFIG_HOMEKIT_DEBUG is not set
-# end of HomeKit
-
-#
 # jsmn
 #
 # CONFIG_JSMN_PARENT_LINKS is not set
