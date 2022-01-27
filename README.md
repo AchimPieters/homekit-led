@@ -3,6 +3,10 @@
 This repository is an example of an ESP32 in combination with the HomeKit SDK. The example shows how to turn an LED on and off with Apple HomeKit. For more information you can visit https://www.studiopieters.nl/esp32--homekit-led
 
 
+[![GitHub All Releases](https://img.shields.io/github/downloads/achimpieters/homekit-led/total?color=green)](https://github.com/achimpieters/homekit-led/releases) 
+[![GitHub license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/hyperion-project/hyperion.ng/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/v/release/achimpieters/homekit-led)](https://img.shields.io/github/v/release/achimpieters/homekit-led)
+[![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://paypal.me/AJFPieters)
 
 
 
