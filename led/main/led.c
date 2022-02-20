@@ -29,53 +29,46 @@
 #include <freertos/task.h>
 #include <driver/gpio.h>
 
-#include <driver/gpio.h>
-
 #include <homekit/homekit.h>
 #include <homekit/characteristics.h>
 #include "wifi.h"
 
 void on_wifi_ready();
 
-esp_err_t event_handler(void *ctx, system_event_t *event)
+static void event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
 {
-        switch(event->event_id) {
-        case SYSTEM_EVENT_STA_START:
-                printf("STA start\n");
-                esp_wifi_connect();
-                break;
-        case SYSTEM_EVENT_STA_GOT_IP:
-                printf("WiFI ready\n");
-                on_wifi_ready();
-                break;
-        case SYSTEM_EVENT_STA_DISCONNECTED:
-                printf("STA disconnected\n");
-                esp_wifi_connect();
-                break;
-        default:
-                break;
-        }
-        return ESP_OK;
+    if (event_base == WIFI_EVENT && (event_id == WIFI_EVENT_STA_START || event_id == WIFI_EVENT_STA_DISCONNECTED)) {
+        printf("STA start\n");
+        esp_wifi_connect();
+    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+        printf("WiFI ready\n");
+        on_wifi_ready();
+    }
 }
 
 static void wifi_init() {
-        tcpip_adapter_init();
-        ESP_ERROR_CHECK(esp_event_loop_init(event_handler, NULL));
+    ESP_ERROR_CHECK(esp_netif_init());
 
-        wifi_init_config_t wifi_init_config = WIFI_INIT_CONFIG_DEFAULT();
-        ESP_ERROR_CHECK(esp_wifi_init(&wifi_init_config));
-        ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    esp_netif_create_default_wifi_sta();
 
-        wifi_config_t wifi_config = {
-                .sta = {
-                        .ssid = WIFI_SSID,
-                        .password = WIFI_PASSWORD,
-                },
-        };
+    ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &event_handler, NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &event_handler, NULL));
 
-        ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
-        ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config));
-        ESP_ERROR_CHECK(esp_wifi_start());
+    wifi_init_config_t wifi_init_config = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&wifi_init_config));
+    ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
+
+    wifi_config_t wifi_config = {
+        .sta = {
+            .ssid = WIFI_SSID,
+            .password = WIFI_PASSWORD,
+        },
+    };
+
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+    ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config));
+    ESP_ERROR_CHECK(esp_wifi_start());
 }
 
 const int led_gpio = 2;
@@ -91,20 +84,20 @@ void led_init() {
 }
 
 void led_identify_task(void *_args) {
-        for (int i=0; i<3; i++) {
-                for (int j=0; j<2; j++) {
-                        led_write(true);
-                        vTaskDelay(100 / portTICK_PERIOD_MS);
-                        led_write(false);
-                        vTaskDelay(100 / portTICK_PERIOD_MS);
-                }
+  for (int i=0; i<3; i++) {
+   for (int j=0; j<2; j++) {
+       led_write(true);
+       vTaskDelay(100 / portTICK_PERIOD_MS);
+       led_write(false);
+       vTaskDelay(100 / portTICK_PERIOD_MS);
+   }
 
-                vTaskDelay(250 / portTICK_PERIOD_MS);
-        }
+   vTaskDelay(250 / portTICK_PERIOD_MS);
+}
 
-        led_write(led_on);
+led_write(false);
 
-        vTaskDelete(NULL);
+vTaskDelete(NULL);
 }
 
 void led_identify(homekit_value_t _value) {
